@@ -1,41 +1,53 @@
 import 'package:flutter/material.dart';
 
+import '../../models/widget_params.dart';
+
 class ElevatedButtonPreview extends StatelessWidget {
-  const ElevatedButtonPreview({super.key});
+  final ElevatedButtonParams params;
+
+  const ElevatedButtonPreview({super.key, required this.params});
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 16,
-      runSpacing: 12,
-      alignment: WrapAlignment.center,
-      children: [
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
-            foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          child: const Text('Primary Button'),
-        ),
-        ElevatedButton.icon(
-          onPressed: () {},
-          icon: const Icon(Icons.send_rounded, size: 18),
-          label: const Text('Send'),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.teal,
-            foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-        ),
-      ],
+    final style = ElevatedButton.styleFrom(
+      backgroundColor: params.backgroundColor,
+      foregroundColor: params.foregroundColor,
+      elevation: params.elevation,
+      padding: EdgeInsets.symmetric(
+        horizontal: params.paddingH,
+        vertical: params.paddingV,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(params.borderRadius),
+      ),
     );
+
+    final voidCallback = params.enabled
+        ? () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Tapped: ${params.text}!'),
+                duration: const Duration(seconds: 1),
+                behavior: SnackBarBehavior.floating,
+              ),
+            );
+          }
+        : null;
+
+    if (params.showIcon) {
+      return ElevatedButton.icon(
+        onPressed: voidCallback,
+        icon: const Icon(Icons.send_rounded, size: 18),
+        label: Text(params.text),
+        style: style,
+      );
+    } else {
+      return ElevatedButton(
+        onPressed: voidCallback,
+        style: style,
+        child: Text(params.text),
+      );
+    }
   }
 }

@@ -1,33 +1,30 @@
 import 'package:flutter/material.dart';
 
+import '../../models/widget_params.dart';
+
 class TextPreview extends StatelessWidget {
-  const TextPreview({super.key});
+  final TextParams params;
+
+  const TextPreview({super.key, required this.params});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Text(
-          'Hello, Flutter!',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.blue,
-            letterSpacing: 1.2,
-          ),
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 400),
+      padding: const EdgeInsets.all(16),
+      child: Text(
+        params.text,
+        textAlign: params.textAlign,
+        maxLines: params.maxLines,
+        overflow: params.overflow,
+        style: TextStyle(
+          fontSize: params.fontSize,
+          fontWeight: params.fontWeight,
+          color: params.color,
+          letterSpacing: params.letterSpacing,
+          fontStyle: params.isItalic ? FontStyle.italic : FontStyle.normal,
         ),
-        const SizedBox(height: 8),
-        Text(
-          'Styled typography with color, weights, and spacing',
-          style: TextStyle(
-            fontSize: 14,
-            fontStyle: FontStyle.italic,
-            color: Colors.grey.shade700,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

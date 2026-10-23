@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/widget_params.dart';
 import 'previews/card_preview.dart';
 import 'previews/column_preview.dart';
 import 'previews/container_preview.dart';
@@ -16,38 +17,43 @@ import 'previews/wrap_preview.dart';
 
 class WidgetPreview extends StatelessWidget {
   final String widgetName;
+  final AppWidgetParams appParams;
 
-  const WidgetPreview({super.key, required this.widgetName});
+  const WidgetPreview({
+    super.key,
+    required this.widgetName,
+    required this.appParams,
+  });
 
   @override
   Widget build(BuildContext context) {
     switch (widgetName) {
       case 'Text':
-        return const TextPreview();
+        return TextPreview(params: appParams.text);
       case 'Container':
-        return const ContainerPreview();
+        return ContainerPreview(params: appParams.container);
       case 'Row':
-        return const RowPreview();
+        return RowPreview(params: appParams.row);
       case 'Column':
-        return const ColumnPreview();
+        return ColumnPreview(params: appParams.column);
       case 'Stack':
-        return const StackPreview();
+        return StackPreview(params: appParams.stack);
       case 'Card':
-        return const CardPreview();
+        return CardPreview(params: appParams.card);
       case 'Icon':
-        return const IconPreview();
+        return IconPreview(params: appParams.icon);
       case 'Image':
-        return const ImagePreview();
+        return ImagePreview(params: appParams.image);
       case 'ElevatedButton':
-        return const ElevatedButtonPreview();
+        return ElevatedButtonPreview(params: appParams.elevatedButton);
       case 'TextField':
-        return const TextFieldPreview();
+        return TextFieldPreview(params: appParams.textField);
       case 'ListView':
-        return const ListViewPreview();
+        return ListViewPreview(params: appParams.listView);
       case 'GridView':
-        return const GridViewPreview();
+        return GridViewPreview(params: appParams.gridView);
       case 'Wrap':
-        return const WrapPreview();
+        return WrapPreview(params: appParams.wrap);
       default:
         return const Center(child: Text('Preview not available'));
     }

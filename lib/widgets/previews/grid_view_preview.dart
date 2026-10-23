@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../models/widget_params.dart';
+
 class GridViewPreview extends StatelessWidget {
-  const GridViewPreview({super.key});
+  final GridViewParams params;
+
+  const GridViewPreview({super.key, required this.params});
 
   @override
   Widget build(BuildContext context) {
@@ -10,35 +14,55 @@ class GridViewPreview extends StatelessWidget {
       Colors.teal.shade100,
       Colors.amber.shade100,
       Colors.purple.shade100,
+      Colors.pink.shade100,
+      Colors.orange.shade100,
+      Colors.cyan.shade100,
+      Colors.green.shade100,
     ];
-    final labels = ['Alpha', 'Beta', 'Gamma', 'Delta'];
-    final icons = [Icons.analytics, Icons.bolt, Icons.eco, Icons.extension];
+    final icons = [
+      Icons.analytics,
+      Icons.bolt,
+      Icons.eco,
+      Icons.extension,
+      Icons.favorite,
+      Icons.star,
+      Icons.palette,
+      Icons.explore,
+    ];
 
-    return SizedBox(
-      width: 260,
-      height: 150,
+    return Container(
+      width: double.infinity,
+      constraints: const BoxConstraints(maxWidth: 360, maxHeight: 180),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade300),
+      ),
       child: GridView.count(
-        crossAxisCount: 2,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        childAspectRatio: 1.6,
-        physics: const NeverScrollableScrollPhysics(),
-        children: List.generate(4, (index) {
+        crossAxisCount: params.crossAxisCount,
+        scrollDirection: params.scrollDirection,
+        mainAxisSpacing: params.mainAxisSpacing,
+        crossAxisSpacing: params.crossAxisSpacing,
+        childAspectRatio: params.childAspectRatio,
+        children: List.generate(params.itemCount, (index) {
+          final color = colors[index % colors.length];
+          final icon = icons[index % icons.length];
           return Container(
             decoration: BoxDecoration(
-              color: colors[index],
-              borderRadius: BorderRadius.circular(10),
+              color: color,
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icons[index], size: 20, color: Colors.black87),
+                Icon(icon, size: 18, color: Colors.black87),
                 const SizedBox(width: 6),
                 Text(
-                  labels[index],
+                  'Item ${index + 1}',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 13,
+                    fontSize: 12,
                   ),
                 ),
               ],

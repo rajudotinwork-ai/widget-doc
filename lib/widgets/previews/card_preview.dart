@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 
+import '../../models/widget_params.dart';
+
 class CardPreview extends StatelessWidget {
-  const CardPreview({super.key});
+  final CardParams params;
+
+  const CardPreview({super.key, required this.params});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      color: params.color,
+      elevation: params.elevation,
+      margin: EdgeInsets.all(params.margin),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(params.borderRadius),
+      ),
       child: Container(
         width: 280,
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(params.padding),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +59,7 @@ class CardPreview extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              'Cards present grouped information with gentle shadow depth and rounded borders.',
+              'Cards present grouped information with customizable elevation and rounded borders.',
               style: TextStyle(fontSize: 12.5, color: Colors.grey.shade700),
             ),
           ],
